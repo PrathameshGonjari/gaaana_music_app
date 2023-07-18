@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import BackgroundImage from "../../../assets/images/background.jpg";
+import BackgroundImage from "@images/background.jpg";
 
 export const BackgroundImageMainWrapper = styled.div`
   position: absolute;

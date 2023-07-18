@@ -1,7 +1,6 @@
-import React from "react";
 import LoginLogo from "@images/logo.png";
+import Flex from "@shared-layouts/Flex";
 import { ImageWrapper } from "./style";
-import Flex from "../../../components/shared-layouts/Flex";
 
 const LoginPageLogo = () => {
   return (

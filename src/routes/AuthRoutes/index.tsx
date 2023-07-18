@@ -1,7 +1,6 @@
-import React from "react";
+import ErrorPage from "@pages/ErrorPage";
+import LoginPage from "@pages/LoginPage";
 import { useRoutes } from "react-router-dom";
-import ErrorPage from "../../pages/ErrorPage";
-import LoginPage from "../../pages/LoginPage";
 
 const AuthRoutes = () => useRoutes([
     {

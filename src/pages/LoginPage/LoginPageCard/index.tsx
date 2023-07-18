@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
-import Flex from "../../../components/shared-layouts/Flex";
-import CustomButton from "../../../components/shared-ui-components/Button";
+import Flex from "@shared-layouts/Flex";
+import CustomButton from "@shared-ui-components/Button";
 import { LoginPageCardWrapper } from "./style";
 
 const LoginPageCard = () => {

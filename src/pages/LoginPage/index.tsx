@@ -1,8 +1,7 @@
-import React from "react";
-import LoginPageImage from "./LoginPageImage";
-import LoginPageCard from "./LoginPageCard";
-import LoginPageLogo from "./LoginPageLogo";
 import { Container, Grid } from "@mui/material";
+import LoginPageCard from "./LoginPageCard";
+import LoginPageImage from "./LoginPageImage";
+import LoginPageLogo from "./LoginPageLogo";
 
 const LoginPage = () => {
   return (
