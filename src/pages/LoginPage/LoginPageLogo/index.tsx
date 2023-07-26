@@ -4,7 +4,7 @@ import { ImageWrapper } from "./style";
 
 const LoginPageLogo = () => {
   return (
-    <Flex justifyContent="center" alignItems="center">
+    <Flex justifycontent="center" alignitems="center">
       <ImageWrapper>
         <img src={LoginLogo} />
       </ImageWrapper>

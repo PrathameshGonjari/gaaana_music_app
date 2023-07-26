@@ -5,7 +5,7 @@ import LoginPageLogo from "./LoginPageLogo";
 
 const LoginPage = () => {
   return (
-    <div>
+    <>
       <LoginPageImage />
       <Container style={{ maxWidth: 375, maxHeight: 679, padding: "0px" }}>
         <Grid direction="column" container>
@@ -17,7 +17,7 @@ const LoginPage = () => {
           </Grid>
         </Grid>
       </Container>
-    </div>
+    </>
   );
 };
 
