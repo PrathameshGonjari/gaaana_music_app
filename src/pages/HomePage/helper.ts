@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { DEFAULT_SEARCH } from "@src/constants";
 import services from "../../services";
 
 export const initialMusic = {
@@ -51,7 +52,7 @@ export const handleSearch = async (
   e: React.ChangeEvent<HTMLInputElement>,
   filter: FilterType
 ) => {
-  const value = e?.target?.value;
+  const value = e?.target?.value || DEFAULT_SEARCH;
   const onSearchCB = async (searchValue: string) => {
     const newFilters = { ...filter, term: searchValue };
     const musicResponse = await getMusic(newFilters);
