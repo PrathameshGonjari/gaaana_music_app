@@ -5,10 +5,9 @@ class Services {
     url: string,
     params?: never,
   ) => {
-    const BASE_URL = "https://itunes.apple.com/"
     return new Promise((resolve, reject) => {
       try {
-        axios.get(`${BASE_URL}${url}`, params)
+        axios.get(`${process.env.REACT_APP_BASEURL_API}${url}`, params)
           .then((res) => {
             return resolve({ data: res })
           })
@@ -25,10 +24,9 @@ class Services {
     url: string,
     params?: unknown,
   ) => {
-    const BASE_URL = "https://itunes.apple.com/"
     return new Promise((resolve, reject) => {
       try {
-        axios.post(`${BASE_URL}${url}`, params)
+        axios.post(`${process.env.REACT_APP_BASEURL_API}${url}`, params)
           .then((res) => {
             return resolve({ data: res })
           })

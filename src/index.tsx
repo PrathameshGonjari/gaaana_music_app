@@ -32,8 +32,8 @@ const theme = createTheme({
 
 const persistor = persistStore(store);
 
-const REACT_APP_GOOGLE_CLIENT_ID =
-  "57595132312-5sr14i6adibnfj7nj0nui6sekndi63jk.apps.googleusercontent.com";
+// const REACT_APP_GOOGLE_CLIENT_ID =
+//   "57595132312-5sr14i6adibnfj7nj0nui6sekndi63jk.apps.googleusercontent.com";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -43,7 +43,7 @@ root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <ThemeProvider theme={theme}>
-        <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+        <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}.apps.googleusercontent.com`}>
           <MusicState>
             <RouterProvider router={router} />
           </MusicState>
