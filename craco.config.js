@@ -19,6 +19,7 @@ module.exports = {
         __dirname,
         "src/components/shared-layouts"
       ),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
       "@pages": path.resolve(__dirname, "src/pages"),
       "@shared-containers": path.resolve(
         __dirname,

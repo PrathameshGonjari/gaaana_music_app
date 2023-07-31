@@ -25,7 +25,8 @@
       "@shared-ui-components/*": ["src/components/shared-ui-components/*"],
       "@constants/*": ["src/constants/*"],
       "@shared-layouts/*": ["src/components/shared-layouts/*"],
-      "@shared-containers/*": ["src/components/shared-containers/*"]
+      "@shared-containers/*": ["src/components/shared-containers/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   },
   "include": ["src"]
