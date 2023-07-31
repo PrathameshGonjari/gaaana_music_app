@@ -15,13 +15,14 @@ import CustomSearchBar from "./CustomSearchBar";
 import LoadingMusicList from "./LoadingMusicList";
 import MusicList from "./MusicList";
 import { getMusic, handleSearch } from "./helper";
+import useScroll from "@hooks/useScroll";
 
 const HomePage = () => {
-  
+
   const { filter, loading, list } = useSelector(
     (state: AppReducerState) => state.musicappreducer
-  );
-
+    );
+    
   const offSetRef = useRef(0);
   const filterRef = useRef(filter);
 
@@ -32,6 +33,7 @@ const HomePage = () => {
   }, []);
 
   const onFirstRender = () => {
+    useScroll(0,0)
     const initialFilterState = initialState?.filter;
     dispatch(handleFilter(initialFilterState));
     filterRef.current = initialFilterState;
