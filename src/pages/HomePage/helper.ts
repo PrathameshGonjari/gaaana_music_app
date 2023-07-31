@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DEFAULT_SEARCH } from "@src/constants";
+import { DEFAULT_SEARCH, debounceCell } from "@src/constants";
 import services from "../../services";
 
 export const initialMusic = {
@@ -35,19 +35,6 @@ export const getMusic = async (filter: FilterType) => {
   }
 };
 
-let timeId: any = 0;
-export const debounceCell = (debFunction: any, value: string, time: number) => {
-  if (timeId) {
-    clearTimeout(timeId);
-  }
-  return new Promise(async (response) => {
-    timeId = setTimeout(async () => {
-      const res = await debFunction(value);
-      response(res);
-    }, time);
-  });
-};
-
 export const handleSearch = async (
   e: React.ChangeEvent<HTMLInputElement>,
   filter: FilterType
@@ -64,7 +51,7 @@ export const handleSearch = async (
       data: { results },
       success,
     },
-  } = (await debounceCell(onSearchCB, value, 500)) as {
+  } = (await debounceCell(onSearchCB, 500, value)) as {
     musicList: { data: { results: MusicListTypes[] }; success: boolean };
   };
   const updatedFilter = { ...filter, offset: 0, term: value };

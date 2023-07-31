@@ -14,6 +14,7 @@ import { initialState } from "@src/store/musicappreducer";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMusic, handleSearch } from "./helper";
+import { throttle } from "@src/constants";
 
 const HomePage = () => {
   const { filter, loading, list } = useSelector(
@@ -47,6 +48,7 @@ const HomePage = () => {
 
     try {
       if (isScroll) {
+        console.log('isScroll: ', isScroll);
         offSetRef.current = offSetRef.current + 25;
         dispatch(handleLoading(true));
         const updatedFilter = {
@@ -70,7 +72,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", scroolFuntion);
+    window.addEventListener("scroll", throttle(scroolFuntion, 500));
     return () => window.removeEventListener("scroll", scroolFuntion);
   }, []);
 
