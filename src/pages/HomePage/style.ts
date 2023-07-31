@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const LoaderWrapper = styled.div<{
-  loading: boolean;
+  isloading: number;
 }>`
-  display: ${(props) => (props.loading ? "block" : "none")};
+  display: ${({ isloading }) => (isloading ? "block" : "none")};
 `;

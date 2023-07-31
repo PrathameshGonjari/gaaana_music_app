@@ -60,3 +60,8 @@ declare interface MusicActionType {
   type: string;
   payload: MusicAppDataType;
 }
+
+declare interface SearchBarProps {
+  onFilterChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  filter: FilterType;
+}

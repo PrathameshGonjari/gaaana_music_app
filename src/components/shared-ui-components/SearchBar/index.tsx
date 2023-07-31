@@ -2,10 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 
-interface SearchBarProps {
-  onFilterChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  filter: FilterType;
-}
+
 
 function SearchBar(props: SearchBarProps) {
   const { onFilterChange, filter } = props;
