@@ -48,7 +48,7 @@ const BottomNavBar: FC<BottomNavBarType> = ({
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   useEffect(() => {
-    handlePlayPause(true)
+    handlePlayPause(true);
     togglePlayPause(playMusic);
   }, [activeMusic?.trackId]);
 
@@ -73,6 +73,7 @@ const BottomNavBar: FC<BottomNavBarType> = ({
   };
 
   const togglePlayPause = async (playMusic: boolean) => {
+    if (!activeMusic?.previewUrl) return;
     const getPlayMusicState = (playMusic: boolean) => {
       if (playMusic) {
         audioPlayer?.current?.play(); //play the audio
@@ -155,6 +156,7 @@ const BottomNavBar: FC<BottomNavBarType> = ({
               sx={{
                 display: { xs: "none", sm: "block" },
                 ml: 2,
+                maxWidth: { sm: 350 },
               }}
             >
               <Typography variant="h6" color="primary">
@@ -170,7 +172,11 @@ const BottomNavBar: FC<BottomNavBarType> = ({
               <IconButton onClick={replayMusic}>
                 <Replay10Icon sx={IconStyle} />
               </IconButton>
-              <Flex justifycontent="center" alignitems="center" className="playPauseButton">
+              <Flex
+                justifycontent="center"
+                alignitems="center"
+                className="playPauseButton"
+              >
                 <IconButton
                   onClick={() => togglePlayPause(playMusic)}
                   aria-label="play/pause"
