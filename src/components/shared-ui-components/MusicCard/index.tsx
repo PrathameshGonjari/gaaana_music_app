@@ -5,12 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 
-import { Wrapper } from "./style";
+import { MusicCardWrapper, Wrapper } from "./style";
 import { Typography } from "@mui/material";
 import { addActiveMusic } from "@src/actions";
 import { useDispatch } from "react-redux";
 import { memo, useContext } from "react";
 import MusicContext from "@src/context/MuiscList/musicContext";
+import Flex from "@src/components/shared-layouts/Flex";
 
 interface MusicCardProps {
   image: string;
@@ -36,59 +37,55 @@ const MusicCard = (props: MusicCardProps) => {
 
   return (
     <Wrapper>
-      <Card sx={{ display: "flex" }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            minWidth: "70%",
-            maxWidth: "70%",
-          }}
-          id="parent"
-        >
-          <CardContent sx={{ flex: "1 0 auto" }}>
-            <Typography
-              sx={{
-                display: "-webkit-box",
-                overflow: "hidden",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2,
-              }}
-            >
-              {AlbumTitle}
-            </Typography>
-            <Typography
-              sx={{
-                display: "-webkit-box",
-                overflow: "hidden",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2,
-              }}
-            >
-              {AlbumSubTitle}
-            </Typography>
-          </CardContent>
-          <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
-            <IconButton
-              className="hidden-child"
-              onClick={() => {
-                onPlayButtonClick(music);
-              }}
-              aria-label="play/pause"
-            >
-              <PlayArrowIcon
-                className="playButton"
-                sx={{ height: 38, width: 38, color: "black" }}
-              />
-            </IconButton>
-          </Box>
-        </Box>
-        <CardMedia
-          component="img"
-          sx={{ width: "25%" }}
-          image={image}
-          alt="Album Cover"
-        />
+      <Card>
+        <Flex>
+          <MusicCardWrapper>
+            <CardContent sx={{ flex: "1 0 auto" }}>
+              <Typography
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                }}
+              >
+                {AlbumTitle}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                }}
+              >
+                {AlbumSubTitle}
+              </Typography>
+            </CardContent>
+            <Box sx={{ pl: 1, pb: 1 }}>
+              <Flex alignitems="center">
+                <IconButton
+                  className="hidden-child"
+                  onClick={() => {
+                    onPlayButtonClick(music);
+                  }}
+                  aria-label="play/pause"
+                >
+                  <PlayArrowIcon
+                    className="playButton"
+                    sx={{ height: 38, width: 38, color: "black" }}
+                  />
+                </IconButton>
+              </Flex>
+            </Box>
+          </MusicCardWrapper>
+          <CardMedia
+            component="img"
+            sx={{ width: "25%" }}
+            image={image}
+            alt="Album Cover"
+          />
+        </Flex>
       </Card>
     </Wrapper>
   );

@@ -1,25 +1,17 @@
-import WebLogoIcon from "@icons/webIcon.png";
 import {
   AppBar,
-  Avatar,
   Box,
   CssBaseline,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Tooltip,
-  Typography,
+  Toolbar
 } from "@mui/material";
-import CustomButton from "@shared-ui-components/Button";
-import { BUTTON_TYPE } from "@shared-ui-components/Button/helper";
-import CustomModal from "@shared-ui-components/Modal";
 import { removeUserData } from "@src/actions";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Flex from "../../shared-layouts/Flex";
-import { ModalStyle } from "./style";
+import LogOutModal from "./LogOutModal";
+import Settings from "./Settings";
+import Logo from "./Logo";
 
 const settings = ["Logout"];
 
@@ -65,72 +57,25 @@ const NavigationBar = () => {
       <Box>
         <CssBaseline />
         <AppBar component="nav">
-          <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-            <Flex justifycontent="center" alignitems="center">
-              <Avatar src={WebLogoIcon} alt="" />
-              <Typography style={{ marginLeft: 10 }} variant="h6">
-                Gaaana
-              </Typography>
-              {/* <Box
-                sx={{
-                  display: { xs: "none", sm: "block" },
-                  ml: 2
-                }}
-              >
-                <SearchBar
-                  filter={filter}
-                  onFilterChange={onSearch}
-                />
-              </Box> */}
+          <Toolbar>
+            <Flex justifycontent="space-between">
+              <Logo />
+              <Settings
+                picture={picture}
+                handleOpenUserMenu={handleOpenUserMenu}
+                anchorElUser={anchorElUser}
+                handleCloseUserMenu={handleCloseUserMenu}
+                settings={settings}
+              />
             </Flex>
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="user icon" src={picture} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
           </Toolbar>
         </AppBar>
       </Box>
-      <CustomModal visible={visible} handleCloseModal={handleCloseModal}>
-        <ModalStyle>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Are you sure you want log out from Gaaana App?
-          </Typography>
-          <Flex style={{ margin: 20 }} justifycontent="space-around">
-            <CustomButton handleClick={handleLogout}>Log Out</CustomButton>
-            <CustomButton
-              type={BUTTON_TYPE.SECONDARY}
-              handleClick={handleCloseModal}
-            >
-              Cancel
-            </CustomButton>
-          </Flex>
-        </ModalStyle>
-      </CustomModal>
+      <LogOutModal
+        visible={visible}
+        handleCloseModal={handleCloseModal}
+        handleLogout={handleLogout}
+      />
     </>
   );
 };

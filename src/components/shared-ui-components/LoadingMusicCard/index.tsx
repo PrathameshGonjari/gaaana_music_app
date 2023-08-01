@@ -2,8 +2,7 @@ import { Skeleton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { Wrapper } from "../MusicCard/style";
-import { LoadingCardWrapper } from "./style";
+import { MusicCardWrapper, Wrapper } from "../MusicCard/style";
 import Flex from "@shared-layouts/Flex";
 
 const LoadingMusicCard = () => {
@@ -13,7 +12,7 @@ const LoadingMusicCard = () => {
     <Wrapper>
       <Card>
         <Flex>
-        <LoadingCardWrapper>
+        <MusicCardWrapper>
           <CardContent sx={{ flex: "1 0 auto" }}>
             {SkeletonWidth?.map((width: string) => (
               <Skeleton key={width} variant="text" width={`${width}%`} />
@@ -24,7 +23,7 @@ const LoadingMusicCard = () => {
             <Skeleton variant="circular" width={38} height={38} />
           </Box>
           </Flex>
-        </LoadingCardWrapper>
+        </MusicCardWrapper>
         <Skeleton variant="rectangular" width={180} height={180} />
         </Flex>
       </Card>
