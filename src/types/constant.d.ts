@@ -1,5 +1,9 @@
 type ChildrenType = string | JSX.Element;
 
+type OffSetRefType = React.MutableRefObject<number>
+type FilterRefType = React.MutableRefObject<FilterType>
+type TriggerRefType = React.MutableRefObject<null>;
+
 declare interface ContextStateType {
   playMusic: boolean
 }

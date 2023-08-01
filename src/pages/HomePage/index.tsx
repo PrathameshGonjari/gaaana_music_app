@@ -7,24 +7,24 @@ import {
   handleLoading,
 } from "@src/actions";
 
-import { debounceCell } from "@src/constants";
+import useIntersectionDetection from "@src/hooks/useIntersectionDetection";
 import { initialState } from "@src/store/musicappreducer";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomSearchBar from "./CustomSearchBar";
 import LoadingMusicList from "./LoadingMusicList";
 import MusicList from "./MusicList";
 import { getMusic, handleSearch } from "./helper";
-import useScroll from "@hooks/useScroll";
+import UseScroll from "@constants/UseScroll";
 
 const HomePage = () => {
-
   const { filter, loading, list } = useSelector(
     (state: AppReducerState) => state.musicappreducer
-    );
-    
+  );
+
   const offSetRef = useRef(0);
   const filterRef = useRef(filter);
+  const triggerRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const HomePage = () => {
   }, []);
 
   const onFirstRender = () => {
-    useScroll(0,0)
+    UseScroll(0, 0);
     const initialFilterState = initialState?.filter;
     dispatch(handleFilter(initialFilterState));
     filterRef.current = initialFilterState;
@@ -64,65 +64,27 @@ const HomePage = () => {
     dispatch(handleLoading(false));
   };
 
-  const triggerRef = useRef(null);
-
-  const useLazyLoad = ({
-    triggerRef,
-  }: {
-    triggerRef: React.MutableRefObject<null>;
-  }) => {
-    const INTERSECTION_THRESHOLD = 5;
-    const LOAD_DELAY_MS = 500;
-
-    const handleEntry = async (entry: IntersectionObserverEntry) => {
-      const boundingRect = entry.boundingClientRect;
-      const intersectionRect = entry.intersectionRect;
-      const isScrolling =
-        !loading &&
-        entry.isIntersecting &&
-        intersectionRect.bottom - boundingRect.bottom <= INTERSECTION_THRESHOLD;
-
-      if (isScrolling) {
-        offSetRef.current = offSetRef.current + 25;
-        dispatch(handleLoading(true));
-        const updatedFilter = {
-          ...filterRef.current,
-          offset: offSetRef.current,
-        };
-        filterRef.current = updatedFilter;
-        dispatch(handleFilter(updatedFilter));
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const res = (await getMusic(filter)) as any;
-        if (res?.success) {
-          dispatch(handleLoadMoreMusicList(res?.data?.results));
-        } else {
-          // show error message
-        }
-        dispatch(handleLoading(false));
-      }
+  const onLoadMore = async () => {
+    if (loading) return;
+    offSetRef.current = offSetRef.current + 25;
+    dispatch(handleLoading(true));
+    const updatedFilter = {
+      ...filterRef.current,
+      offset: offSetRef.current,
     };
-
-    const onIntersect = useCallback(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (entries: any) => debounceCell(handleEntry, LOAD_DELAY_MS, entries[0]),
-      [handleEntry]
-    );
-
-    useEffect(() => {
-      if (triggerRef.current) {
-        const container = triggerRef.current;
-        const observer = new IntersectionObserver(onIntersect);
-
-        observer.observe(container);
-
-        return () => {
-          observer.disconnect();
-        };
-      }
-    }, [triggerRef, onIntersect]);
+    filterRef.current = updatedFilter;
+    dispatch(handleFilter(updatedFilter));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const res = (await getMusic(filter)) as any;
+    if (res?.success) {
+      dispatch(handleLoadMoreMusicList(res?.data?.results));
+    } else {
+      // show error message
+    }
+    dispatch(handleLoading(false));
   };
 
-  useLazyLoad({ triggerRef });
+  useIntersectionDetection({ triggerRef, callBack: onLoadMore });
 
   return (
     <Flex direction="column" style={{ marginTop: 100 }}>
