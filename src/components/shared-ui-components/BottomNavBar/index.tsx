@@ -6,28 +6,31 @@ import {
   Paper,
   Slider,
   Typography,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import Flex from "@src/components/shared-layouts/Flex";
-import { memo, useContext, useEffect, useRef, useState } from "react";
+import { FC, memo, useEffect, useRef, useState } from "react";
 
 import Forward10Icon from "@mui/icons-material/Forward10";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Replay10Icon from "@mui/icons-material/Replay10";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
-import MusicContext from "@src/context/MuiscList/musicContext";
-import { useSelector } from "react-redux";
-import { IconStyle, TinyText } from "./style";
+import { IconStyle, MediaContainerWrapper, TinyText } from "./style";
 
-const BottomNavBar = () => {
-  const { activeMusic } = useSelector(
-    (state: AppReducerState) => state.musicappreducer
-  );
+interface BottomNavBarType {
+  playMusic: boolean;
+  activeMusic: MusicType;
+  handleStop: () => void;
+  handlePlayPause: (playMusicState: boolean) => void;
+}
 
-  const [{ setMusicState, musicState }] = useContext(MusicContext);
-   const { playMusic } = musicState 
-
+const BottomNavBar: FC<BottomNavBarType> = ({
+  playMusic,
+  activeMusic,
+  handleStop,
+  handlePlayPause,
+}) => {
   const theme = useTheme();
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState<number>(0); //seconds
@@ -36,7 +39,7 @@ const BottomNavBar = () => {
   const animationRef: any = useRef(); //refrence for animation
 
   // audioPlayer.volume = 0.75;
-  
+
   useEffect(() => {
     const seconds: number = Math.floor(audioPlayer?.current?.duration);
     if (seconds && !isNaN(seconds)) {
@@ -45,9 +48,7 @@ const BottomNavBar = () => {
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   useEffect(() => {
-    setMusicState({
-      playMusic: true,
-    });
+    handlePlayPause(true)
     togglePlayPause(playMusic);
   }, [activeMusic?.trackId]);
 
@@ -64,19 +65,15 @@ const BottomNavBar = () => {
   };
 
   const handleStopButton = () => {
-    setMusicState((prev: ContextStateType) => {
-      return {
-        ...prev, playMusic: true
-      }
-    });
+    handleStop();
     audioPlayer?.current?.pause();
     progressBar.current.value = 0;
     audioPlayer.current.currentTime = 0;
     setPosition(Math.floor(0));
   };
 
-  const togglePlayPause = async(playMusic: boolean) => {
-   const getPlayMusicState = (playMusic: boolean) => {
+  const togglePlayPause = async (playMusic: boolean) => {
+    const getPlayMusicState = (playMusic: boolean) => {
       if (playMusic) {
         audioPlayer?.current?.play(); //play the audio
         animationRef.current = requestAnimationFrame(whilePlaying);
@@ -86,10 +83,8 @@ const BottomNavBar = () => {
       }
       return !playMusic;
     };
-    const playMusicState = await getPlayMusicState(playMusic)
-    setMusicState({
-      playMusic: playMusicState,
-    });
+    const playMusicState = await getPlayMusicState(playMusic);
+    handlePlayPause(playMusicState);
   };
 
   const formatDuration = (value: number) => {
@@ -170,29 +165,36 @@ const BottomNavBar = () => {
           </Flex>
         </Box>
         <Box sx={{ ml: 2 }}>
-          <Flex justifycontent="center" alignitems="center">
-            <IconButton onClick={replayMusic}>
-              <Replay10Icon sx={IconStyle} />
-            </IconButton>
-            <IconButton
-              onClick={() => togglePlayPause(playMusic)}
-              aria-label="play/pause"
-            >
-              {playMusic ? (
-                <PlayArrowIcon sx={IconStyle} />
-              ) : (
-                <PauseCircleIcon sx={IconStyle} />
-              )}
-            </IconButton>
-            {!playMusic && (
-              <IconButton onClick={handleStopButton} aria-label="play/pause">
-                <StopCircleIcon sx={IconStyle} />
+          <MediaContainerWrapper>
+            <Flex justifycontent="center" alignitems="center">
+              <IconButton onClick={replayMusic}>
+                <Replay10Icon sx={IconStyle} />
               </IconButton>
-            )}
-            <IconButton onClick={forwardMusic}>
-              <Forward10Icon sx={IconStyle} />
-            </IconButton>
-          </Flex>
+              <Flex justifycontent="center" alignitems="center" className="playPauseButton">
+                <IconButton
+                  onClick={() => togglePlayPause(playMusic)}
+                  aria-label="play/pause"
+                >
+                  {playMusic ? (
+                    <PlayArrowIcon sx={IconStyle} />
+                  ) : (
+                    <PauseCircleIcon sx={IconStyle} />
+                  )}
+                </IconButton>
+                {!playMusic && (
+                  <IconButton
+                    onClick={handleStopButton}
+                    aria-label="play/pause"
+                  >
+                    <StopCircleIcon sx={IconStyle} />
+                  </IconButton>
+                )}
+              </Flex>
+              <IconButton onClick={forwardMusic}>
+                <Forward10Icon sx={IconStyle} />
+              </IconButton>
+            </Flex>
+          </MediaContainerWrapper>
           <Box>
             <Slider
               ref={progressBar}

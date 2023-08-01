@@ -1,9 +1,4 @@
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Toolbar
-} from "@mui/material";
+import { AppBar, Box, CssBaseline, Toolbar } from "@mui/material";
 import { removeUserData } from "@src/actions";
 import Cookies from "js-cookie";
 import { useState } from "react";
@@ -12,6 +7,7 @@ import Flex from "../../shared-layouts/Flex";
 import LogOutModal from "./LogOutModal";
 import Settings from "./Settings";
 import Logo from "./Logo";
+import { AppBarWrapper } from "./style";
 
 const settings = ["Logout"];
 
@@ -54,23 +50,21 @@ const NavigationBar = () => {
 
   return (
     <>
-      <Box>
+      <AppBarWrapper>
         <CssBaseline />
         <AppBar component="nav">
-          <Toolbar>
-            <Flex justifycontent="space-between">
-              <Logo />
-              <Settings
-                picture={picture}
-                handleOpenUserMenu={handleOpenUserMenu}
-                anchorElUser={anchorElUser}
-                handleCloseUserMenu={handleCloseUserMenu}
-                settings={settings}
-              />
-            </Flex>
+          <Toolbar className="toolbar">
+            <Logo />
+            <Settings
+              picture={picture}
+              handleOpenUserMenu={handleOpenUserMenu}
+              anchorElUser={anchorElUser}
+              handleCloseUserMenu={handleCloseUserMenu}
+              settings={settings}
+            />
           </Toolbar>
         </AppBar>
-      </Box>
+      </AppBarWrapper>
       <LogOutModal
         visible={visible}
         handleCloseModal={handleCloseModal}

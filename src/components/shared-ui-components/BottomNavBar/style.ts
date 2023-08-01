@@ -17,3 +17,10 @@ export const TinyText = styled(Typography)({
   fontWeight: 500,
   letterSpacing: "0.2",
 });
+
+export const MediaContainerWrapper = styled.div`
+  min-width: 220px;
+  .playPauseButton {
+    min-width: 108px;
+  }
+`;

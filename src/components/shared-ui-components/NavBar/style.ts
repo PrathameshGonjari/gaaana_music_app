@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import styled from "styled-components";
 
 export const ModalStyle = styled.div`
@@ -10,4 +11,11 @@ export const ModalStyle = styled.div`
   box-shadow: 24px;
   padding: 20px;
   border-radius: 10px;
+`;
+
+export const AppBarWrapper = styled(Box)`
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
