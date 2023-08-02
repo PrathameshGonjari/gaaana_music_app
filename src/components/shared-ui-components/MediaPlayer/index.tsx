@@ -18,14 +18,14 @@ import Replay10Icon from "@mui/icons-material/Replay10";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import { IconStyle, MediaContainerWrapper, TinyText } from "./style";
 
-interface BottomNavBarType {
+interface MediaPlayerType {
   playMusic: boolean;
   activeMusic: MusicType;
   handleStop: () => void;
   handlePlayPause: (playMusicState: boolean) => void;
 }
 
-const BottomNavBar: FC<BottomNavBarType> = ({
+const MediaPlayer: FC<MediaPlayerType> = ({
   playMusic,
   activeMusic,
   handleStop,
@@ -48,6 +48,8 @@ const BottomNavBar: FC<BottomNavBarType> = ({
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   useEffect(() => {
+    audioPlayer?.current?.pause(); //pause the audio
+    cancelAnimationFrame(animationRef.current);
     handlePlayPause(true);
     togglePlayPause(playMusic);
   }, [activeMusic?.trackId]);
@@ -72,11 +74,11 @@ const BottomNavBar: FC<BottomNavBarType> = ({
     setPosition(Math.floor(0));
   };
 
-  const togglePlayPause = async (playMusic: boolean) => {
-    if (!activeMusic?.previewUrl) return;
+  const togglePlayPause = (playMusic: boolean) => {
+    if (!audioPlayer?.current && !activeMusic?.previewUrl) return;
     const getPlayMusicState = (playMusic: boolean) => {
       if (playMusic) {
-        audioPlayer?.current?.play(); //play the audio
+        audioPlayer?.current?.play()//play the audio
         animationRef.current = requestAnimationFrame(whilePlaying);
       } else {
         audioPlayer?.current?.pause(); //pause the audio
@@ -84,7 +86,7 @@ const BottomNavBar: FC<BottomNavBarType> = ({
       }
       return !playMusic;
     };
-    const playMusicState = await getPlayMusicState(playMusic);
+    const playMusicState = getPlayMusicState(playMusic);
     handlePlayPause(playMusicState);
   };
 
@@ -226,4 +228,4 @@ const BottomNavBar: FC<BottomNavBarType> = ({
   );
 };
 
-export default memo(BottomNavBar);
+export default memo(MediaPlayer);

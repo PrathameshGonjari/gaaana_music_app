@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
-import BottomNavBar from "@shared-ui-components/BottomNavBar";
 import NavigationBar from "@shared-ui-components/NavBar";
+import MediaPlayer from "@shared-ui-components/MediaPlayer";
 import MusicContext from "@src/context/MuiscList/musicContext";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
@@ -35,7 +35,7 @@ const DefaultLayout = () => {
       <Container>
         <Outlet />
       </Container>
-      <BottomNavBar
+      <MediaPlayer
         playMusic={playMusic}
         activeMusic={activeMusic}
         handleStop={handleStop}
