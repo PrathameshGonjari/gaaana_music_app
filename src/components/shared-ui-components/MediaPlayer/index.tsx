@@ -48,11 +48,15 @@ const MediaPlayer: FC<MediaPlayerType> = ({
   }, [audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState]);
 
   useEffect(() => {
+    handleTrackChange();
+  }, [activeMusic?.trackId]);
+
+  const handleTrackChange = () => {
     audioPlayer?.current?.pause(); //pause the audio
     cancelAnimationFrame(animationRef.current);
     handlePlayPause(true);
     togglePlayPause(playMusic);
-  }, [activeMusic?.trackId]);
+  };
 
   const whilePlaying = () => {
     progressBar.current.value = audioPlayer?.current?.currentTime;
@@ -78,7 +82,7 @@ const MediaPlayer: FC<MediaPlayerType> = ({
     if (!audioPlayer?.current && !activeMusic?.previewUrl) return;
     const getPlayMusicState = (playMusic: boolean) => {
       if (playMusic) {
-        audioPlayer?.current?.play()//play the audio
+        audioPlayer?.current?.play(); //play the audio
         animationRef.current = requestAnimationFrame(whilePlaying);
       } else {
         audioPlayer?.current?.pause(); //pause the audio
