@@ -1,13 +1,12 @@
-import { AppBar, Box, CssBaseline, Toolbar } from "@mui/material";
+import { AppBar, Box, CssBaseline } from "@mui/material";
 import { removeUserData } from "@src/actions";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Flex from "../../shared-layouts/Flex";
 import LogOutModal from "./LogOutModal";
-import Settings from "./Settings";
 import Logo from "./Logo";
-import { AppBarWrapper } from "./style";
+import Settings from "./Settings";
+import { AppToolBar } from "./style";
 
 const settings = ["Logout"];
 
@@ -50,10 +49,10 @@ const NavigationBar = () => {
 
   return (
     <>
-      <AppBarWrapper>
+      <Box>
         <CssBaseline />
         <AppBar component="nav">
-          <Toolbar className="toolbar">
+          <AppToolBar>
             <Logo />
             <Settings
               picture={picture}
@@ -62,9 +61,9 @@ const NavigationBar = () => {
               handleCloseUserMenu={handleCloseUserMenu}
               settings={settings}
             />
-          </Toolbar>
+          </AppToolBar>
         </AppBar>
-      </AppBarWrapper>
+      </Box>
       <LogOutModal
         visible={visible}
         handleCloseModal={handleCloseModal}

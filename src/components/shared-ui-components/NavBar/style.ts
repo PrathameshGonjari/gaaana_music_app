@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Toolbar } from "@mui/material";
 import styled from "styled-components";
 
 export const ModalStyle = styled.div`
@@ -13,9 +13,7 @@ export const ModalStyle = styled.div`
   border-radius: 10px;
 `;
 
-export const AppBarWrapper = styled(Box)`
-  .toolbar {
-    display: flex;
-    justify-content: space-between;
-  }
+export const AppToolBar = styled(Toolbar)`
+  display: flex;
+  justify-content: space-between;
 `;
