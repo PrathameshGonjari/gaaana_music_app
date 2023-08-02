@@ -15,7 +15,7 @@ import CustomSearchBar from "./CustomSearchBar";
 import LoadingMusicList from "./LoadingMusicList";
 import MusicList from "./MusicList";
 import { getMusic, handleSearch } from "./helper";
-import UseScroll from "@src/constants/useScroll";
+import UseScroll from "@src/constants/UseScroll";
 
 const HomePage = () => {
   const { filter, loading, list } = useSelector(
