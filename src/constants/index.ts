@@ -5,7 +5,7 @@ let timeId: any = 0;
 export const debounceCell = (
   debFunction: any,
   time: number,
-  value?: string
+  value?: any
 ) => {
   if (timeId) {
     clearTimeout(timeId);

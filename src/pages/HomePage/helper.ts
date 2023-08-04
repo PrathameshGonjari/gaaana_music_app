@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DEFAULT_SEARCH, debounceCell } from "@src/constants";
+import { DEFAULT_SEARCH } from "@src/constants";
 import services from "../../services";
 
 export const initialMusic = {
@@ -33,6 +33,23 @@ export const getMusic = async (filter: FilterType) => {
   } catch (err) {
     return { error: err || "Something Went Wrong" };
   }
+};
+
+let timeId: any = 0;
+export const debounceCell = (
+  debFunction: any,
+  time: number,
+  value?: any
+) => {
+  if (timeId) {
+    clearTimeout(timeId);
+  }
+  return new Promise(async (response) => {
+    timeId = setTimeout(async () => {
+      const res = await debFunction(value);
+      response(res);
+    }, time);
+  });
 };
 
 export const handleSearch = async (
